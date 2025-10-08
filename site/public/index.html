@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#133a64" />
+    <title>僑務委員會公告快覽</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="shell hero__inner">
+        <div class="hero__lede">
+          <p class="hero__eyebrow">僑務委員會</p>
+          <h1 class="hero__title">最新公告快覽</h1>
+          <p class="hero__description">
+            即時彙整僑務委員會網站公告，快速掌握行文日期、主旨、截止日期與附件檔案，並提供優雅的手機和平板瀏覽體驗。
+          </p>
+          <div class="hero__actions">
+            <a
+              class="hero__link"
+              href="https://www.kaa.org.tw/public_list_1.php?t=0&amp;search_input1=&amp;search_input2=&amp;search_input3=&amp;b=1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              前往官網查看更多
+            </a>
+          </div>
+        </div>
+        <dl class="hero__meta">
+          <div>
+            <dt>資料更新時間</dt>
+            <dd id="updatedAt" aria-live="polite">尚未更新</dd>
+          </div>
+          <div>
+            <dt>目前公告數</dt>
+            <dd>
+              <span id="totalDocuments">0</span>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </header>
+
+    <main class="shell flow">
+      <section class="insights" aria-live="polite">
+        <article class="metric-card metric-card--primary">
+          <header>即將截止</header>
+          <strong id="dueSoonCount">0</strong>
+          <p id="dueSoonDescription">7 日內截止的案件</p>
+        </article>
+        <article class="metric-card">
+          <header>仍在受理</header>
+          <strong id="activeCount">0</strong>
+          <p>距截止超過 7 天的案件</p>
+        </article>
+        <article class="metric-card metric-card--soft">
+          <header>已截止</header>
+          <strong id="expiredCount">0</strong>
+          <p>逾期未處理的案件</p>
+        </article>
+        <article class="metric-card metric-card--outline">
+          <header>無截止日</header>
+          <strong id="noDeadlineCount">0</strong>
+          <p>適合作為隨時查詢的參考資料</p>
+        </article>
+      </section>
+
+      <section class="controls" aria-label="篩選與排序">
+        <div class="search-group">
+          <label class="field-label" for="search">搜尋主旨或附件</label>
+          <input
+            id="search"
+            type="search"
+            placeholder="輸入關鍵字，例如「活動」或「申請」"
+            autocomplete="off"
+          />
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="statusFilter">截止狀態</label>
+          <select id="statusFilter">
+            <option value="all">全部公告</option>
+            <option value="due-soon">即將截止 (7 日內)</option>
+            <option value="active">截止未到</option>
+            <option value="expired">已截止</option>
+            <option value="no-deadline">無截止日</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="sortSelect">排序方式</label>
+          <select id="sortSelect">
+            <option value="deadline-asc">截止日期最接近</option>
+            <option value="deadline-desc">截止日期最晚</option>
+            <option value="date-desc">最新公告在前</option>
+            <option value="date-asc">最早公告在前</option>
+          </select>
+        </div>
+        <button id="clearFilters" type="button">重設篩選</button>
+      </section>
+
+      <section aria-live="polite">
+        <div id="status" class="status">資料載入中...</div>
+        <div id="documentList" class="document-grid" hidden></div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <div class="shell">
+        <p>
+          資料來源：
+          <a
+            href="https://www.kaa.org.tw/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >僑務委員會</a
+          >
+          ｜本站以 GitHub Pages 自動更新佈署。
+        </p>
+      </div>
+    </footer>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
