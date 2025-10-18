@@ -98,16 +98,16 @@ elements.clearFilters.addEventListener('click', () => {
 loadDocuments();
 
 function bootstrapLayout() {
-  document.title = '僑務委員會公告快覽';
+  document.title = '高雄建築師公會公告快覽';
   const template = document.createElement('template');
   template.innerHTML = `
     <header class="hero">
       <div class="shell hero__inner">
         <div class="hero__lede">
-          <p class="hero__eyebrow">僑務委員會</p>
-          <h1 class="hero__title">最新公告快覽</h1>
+          <p class="hero__eyebrow">高雄建築師公會</p>
+          <h1 class="hero__title">最新公告快訊</h1>
           <p class="hero__description">
-            即時彙整僑務委員會網站公告，快速掌握行文日期、主旨、截止日期與附件檔案，並提供優雅的手機和平板瀏覽體驗。
+            掌握高雄建築師公會最新公告，行文日期、主旨、截止日期與附件一次整理，手機與平板皆可輕鬆瀏覽。
           </p>
           <div class="hero__actions">
             <a
@@ -116,14 +116,14 @@ function bootstrapLayout() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              前往官網查看更多
+              前往公會網站
             </a>
           </div>
         </div>
         <dl class="hero__meta">
           <div>
-            <dt>資料更新時間</dt>
-            <dd id="updatedAt" aria-live="polite">尚未更新</dd>
+            <dt>公告單位</dt>
+            <dd>高雄建築師公會</dd>
           </div>
           <div>
             <dt>目前公告數</dt>
@@ -198,25 +198,28 @@ function bootstrapLayout() {
     </main>
 
     <footer class="app-footer">
-      <div class="shell">
-        <p>
+      <div class="shell footer-inner">
+        <p class="footer-copy">
           資料來源：
           <a
             href="https://www.kaa.org.tw/"
             target="_blank"
             rel="noopener noreferrer"
-            >僑務委員會</a
+            >高雄建築師公會</a
           >
-          ｜本站以 GitHub Pages 自動更新佈署。
+          ｜GitHub Pages 自動佈署。
         </p>
+        <p id="updatedAt" class="footer-updated" aria-live="polite">資料更新：尚未更新</p>
       </div>
     </footer>
+
+    <script type="module" src="./app.js"></script>
   `;
   document.body.replaceChildren(template.content.cloneNode(true));
 }
 
 function formatUpdatedAt(isoString) {
-  if (!isoString) return '尚未更新';
+  if (!isoString) return '資料更新：尚未更新';
 
   const formatter = new Intl.DateTimeFormat('zh-TW', {
     dateStyle: 'medium',
@@ -225,11 +228,12 @@ function formatUpdatedAt(isoString) {
   });
 
   try {
-    return `最後更新：${formatter.format(new Date(isoString))}`;
+    return `資料更新：${formatter.format(new Date(isoString))}`;
   } catch {
-    return `最後更新：${isoString}`;
+    return `資料更新：${isoString}`;
   }
 }
+
 
 function parseDate(value) {
   if (!value) return null;
