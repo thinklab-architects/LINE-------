@@ -141,6 +141,12 @@ a:focus-visible {
   color: var(--ink-soft);
 }
 
+.hero__eyebrow-abbr {
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  margin-right: 0.35rem;
+}
+
 .hero__title {
   margin: 0;
   font-size: clamp(2rem, 5vw, 3.1rem);
