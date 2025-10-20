@@ -130,6 +130,7 @@ function bootstrapLayout() {
     <header class="hero">
       <div class="shell hero__inner">
         <div class="hero__lede">
+          <span class="hero__logo" aria-hidden="true">KAA</span>
           <p class="hero__eyebrow">高雄建築師公會</p>
           <h1 class="hero__title">最新公告快訊</h1>
           <p class="hero__description">
