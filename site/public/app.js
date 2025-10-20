@@ -7,7 +7,7 @@ const BADGE_TEXT = {
   'no-deadline': '無截止日',
 };
 
-const DEFAULT_STATUS_VALUES = ['due-soon', 'active', 'no-deadline'];
+const DEFAULT_STATUS_VALUES = ['due-soon', 'active'];
 
 const state = {
   documents: [],
@@ -164,10 +164,6 @@ function bootstrapLayout() {
           <label class="status-option">
             <input type="checkbox" name="statusFilter" value="expired" />
             <span>已截止</span>
-          </label>
-          <label class="status-option">
-            <input type="checkbox" name="statusFilter" value="no-deadline" checked />
-            <span>無截止日</span>
           </label>
         </fieldset>
 
