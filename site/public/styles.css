@@ -2,17 +2,17 @@
   color-scheme: light dark;
   font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
   line-height: 1.65;
-  background-color: #f2f4f7;
-  color: #1f2933;
+  background-color: #f8fafc;
+  color: #111111;
   --shell-width: min(1120px, 92vw);
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-strong: rgba(255, 255, 255, 0.92);
-  --glass-soft: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.58);
-  --glass-shadow: 0 28px 60px rgba(15, 23, 42, 0.14);
-  --ink-muted: rgba(31, 41, 51, 0.62);
-  --ink-soft: rgba(31, 41, 51, 0.45);
-  --accent-strong: rgba(82, 88, 99, 0.92);
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-strong: rgba(255, 255, 255, 0.98);
+  --glass-soft: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(209, 213, 219, 0.6);
+  --glass-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
+  --ink-muted: rgba(17, 17, 17, 0.65);
+  --ink-soft: rgba(17, 17, 17, 0.5);
+  --accent-strong: rgba(30, 30, 30, 0.92);
   --accent: rgba(82, 88, 99, 0.75);
   --accent-soft: rgba(82, 88, 99, 0.18);
   --badge-soon: rgba(217, 119, 6, 0.18);
@@ -28,7 +28,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(232, 235, 241, 0.9)), #f2f4f7;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(242, 244, 251, 0.96)), #f8fafc;
   color: inherit;
 }
 
@@ -54,7 +54,7 @@ a:focus-visible {
 .hero {
   position: relative;
   padding: clamp(3rem, 6vw, 4.2rem) 0 clamp(2.6rem, 5vw, 3.6rem);
-  background: linear-gradient(140deg, rgba(255, 255, 255, 0.95), rgba(231, 234, 240, 0.82));
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.98), rgba(238, 241, 247, 0.9));
   overflow: hidden;
 }
 
@@ -148,7 +148,7 @@ a:focus-visible {
   display: grid;
   gap: 1.2rem;
   border-radius: 24px;
-  background: var(--glass-bg);
+  background: var(--glass-strong);
   backdrop-filter: blur(26px) saturate(160%);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
@@ -210,7 +210,7 @@ a:focus-visible {
 .metric-card strong {
   font-size: clamp(1.9rem, 3vw, 2.5rem);
   font-weight: 700;
-  color: #1f2933;
+  color: #111111;
 }
 
 .metric-card p {
@@ -300,8 +300,8 @@ button:focus-visible {
   margin-bottom: 1.4rem;
   padding: 1rem 1.3rem;
   border-radius: 18px;
-  background: rgba(148, 163, 184, 0.16);
-  color: var(--accent-strong);
+  background: rgba(209, 213, 219, 0.25);
+  color: #111111;
   font-weight: 600;
   letter-spacing: 0.01em;
 }
@@ -323,7 +323,7 @@ button:focus-visible {
   gap: 1.2rem;
   padding: 1.8rem;
   border-radius: 26px;
-  background: var(--glass-bg);
+  background: rgba(255, 255, 255, 0.96);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(28px) saturate(160%);
   box-shadow: var(--glass-shadow);
@@ -428,6 +428,7 @@ button:focus-visible {
 .meta-item dd {
   margin: 0;
   font-size: 0.95rem;
+  color: #111111;
 }
 
 .deadline-wrapper {
@@ -476,7 +477,7 @@ button:focus-visible {
   padding: 0.45rem 0.85rem;
   border-radius: 999px;
   background: rgba(148, 163, 184, 0.16);
-  color: #374151;
+  color: #111111;
   font-size: 0.85rem;
   font-weight: 600;
   transition: background 0.2s ease;
