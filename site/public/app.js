@@ -133,7 +133,7 @@ function bootstrapLayout() {
           <p class="hero__eyebrow">高雄建築師公會</p>
           <h1 class="hero__title">最新公告快訊</h1>
           <p class="hero__description">
-            掌握高雄建築師公會最新公告，行文日期、主旨、截止日期與附件一次整理，手機與平板皆可輕鬆瀏覽。
+            掌握高雄建築師公會最新公告，手機與平板皆可輕鬆瀏覽。
           </p>
           <div class="hero__actions">
             <a
@@ -398,12 +398,7 @@ function updateStatus(filtered, total) {
     return;
   }
 
-  if (filtered === total) {
-    elements.status.textContent = `共 ${total} 筆公告`;
-    return;
-  }
-
-  elements.status.textContent = `符合 ${filtered} / ${total} 筆公告`;
+  elements.status.textContent = `共 ${filtered} 筆公告`;
 }
 
 function setDocumentListVisibility(hasResults) {
