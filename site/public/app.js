@@ -7,13 +7,6 @@ const BADGE_TEXT = {
   'no-deadline': '無截止日',
 };
 
-const METRIC_KEY_BY_CATEGORY = {
-  'due-soon': 'dueSoon',
-  active: 'active',
-  expired: 'expired',
-  'no-deadline': 'noDeadline',
-};
-
 const state = {
   documents: [],
   filtered: [],
@@ -21,13 +14,6 @@ const state = {
     search: '',
     status: 'all',
     sort: 'deadline-asc',
-  },
-  metrics: {
-    total: 0,
-    dueSoon: 0,
-    active: 0,
-    expired: 0,
-    noDeadline: 0,
   },
 };
 
@@ -41,12 +27,6 @@ const elements = {
   sortSelect: document.getElementById('sortSelect'),
   clearFilters: document.getElementById('clearFilters'),
   updatedAt: document.getElementById('updatedAt'),
-  totalDocuments: document.getElementById('totalDocuments'),
-  dueSoonCount: document.getElementById('dueSoonCount'),
-  dueSoonDescription: document.getElementById('dueSoonDescription'),
-  activeCount: document.getElementById('activeCount'),
-  expiredCount: document.getElementById('expiredCount'),
-  noDeadlineCount: document.getElementById('noDeadlineCount'),
 };
 
 elements.searchInput.addEventListener('input', (event) => {
@@ -120,45 +100,10 @@ function bootstrapLayout() {
             </a>
           </div>
         </div>
-        <dl class="hero__meta">
-          <div>
-            <dt>公告單位</dt>
-            <dd>高雄建築師公會</dd>
-          </div>
-          <div>
-            <dt>目前公告數</dt>
-            <dd>
-              <span id="totalDocuments">0</span>
-            </dd>
-          </div>
-        </dl>
       </div>
     </header>
 
     <main class="shell flow">
-      <section class="insights" aria-live="polite">
-        <article class="metric-card metric-card--primary">
-          <header>即將截止</header>
-          <strong id="dueSoonCount">0</strong>
-          <p id="dueSoonDescription">7 日內截止的案件</p>
-        </article>
-        <article class="metric-card">
-          <header>仍在受理</header>
-          <strong id="activeCount">0</strong>
-          <p>距截止超過 7 天的案件</p>
-        </article>
-        <article class="metric-card metric-card--soft">
-          <header>已截止</header>
-          <strong id="expiredCount">0</strong>
-          <p>逾期未處理的案件</p>
-        </article>
-        <article class="metric-card metric-card--outline">
-          <header>無截止日</header>
-          <strong id="noDeadlineCount">0</strong>
-          <p>適合作為隨時查詢的參考資料</p>
-        </article>
-      </section>
-
       <section class="controls" aria-label="篩選與排序">
         <div class="search-group">
           <label class="field-label" for="search">搜尋主旨或附件</label>
@@ -205,8 +150,7 @@ function bootstrapLayout() {
             href="https://www.kaa.org.tw/"
             target="_blank"
             rel="noopener noreferrer"
-            >高雄建築師公會</a
-          >
+          >高雄建築師公會</a>
           ｜GitHub Pages 自動佈署。
         </p>
         <p id="updatedAt" class="footer-updated" aria-live="polite">資料更新：尚未更新</p>
@@ -215,6 +159,7 @@ function bootstrapLayout() {
 
     <script type="module" src="./app.js"></script>
   `;
+
   document.body.replaceChildren(template.content.cloneNode(true));
 }
 
@@ -290,38 +235,6 @@ function enrichDocument(doc) {
     deadlineCategory,
     daysUntilDeadline,
   };
-}
-
-function computeMetrics(documents) {
-  const metrics = {
-    total: documents.length,
-    dueSoon: 0,
-    active: 0,
-    expired: 0,
-    noDeadline: 0,
-  };
-
-  documents.forEach((doc) => {
-    const key = METRIC_KEY_BY_CATEGORY[doc.deadlineCategory];
-    if (key) {
-      metrics[key] += 1;
-    }
-  });
-
-  return metrics;
-}
-
-function updateMetrics(metrics) {
-  elements.totalDocuments.textContent = metrics.total.toString();
-  elements.dueSoonCount.textContent = metrics.dueSoon.toString();
-  elements.activeCount.textContent = metrics.active.toString();
-  elements.expiredCount.textContent = metrics.expired.toString();
-  elements.noDeadlineCount.textContent = metrics.noDeadline.toString();
-
-  elements.dueSoonDescription.textContent =
-    metrics.dueSoon > 0
-      ? `7 日內截止的 ${metrics.dueSoon} 件公告`
-      : '目前沒有即將截止的公告';
 }
 
 function formatDeadlineNote(doc) {
@@ -599,9 +512,6 @@ async function loadDocuments() {
     const documents = payload.documents ?? [];
 
     state.documents = documents.map(enrichDocument);
-    state.metrics = computeMetrics(state.documents);
-
-    updateMetrics(state.metrics);
     render();
 
     if (payload.updatedAt) {
