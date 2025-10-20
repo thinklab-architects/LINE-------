@@ -11,6 +11,18 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div class="top-bar shell">
+      <div class="top-bar__search">
+        <label class="sr-only" for="search">搜尋主旨或附件</label>
+        <input
+          id="search"
+          type="search"
+          placeholder="搜尋主旨或附件"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
     <header class="hero">
       <div class="shell hero__inner">
         <div class="hero__lede">
@@ -35,25 +47,26 @@
 
     <main class="shell flow">
       <section class="controls" aria-label="篩選與排序">
-        <div class="search-group">
-          <label class="field-label" for="search">搜尋主旨或附件</label>
-          <input
-            id="search"
-            type="search"
-            placeholder="輸入關鍵字，例如「活動」或「申請」"
-            autocomplete="off"
-          />
-        </div>
-        <div class="field-group">
-          <label class="field-label" for="statusFilter">截止狀態</label>
-          <select id="statusFilter">
-            <option value="all">全部公告</option>
-            <option value="due-soon">即將截止 (7 日內)</option>
-            <option value="active">截止未到</option>
-            <option value="expired">已截止</option>
-            <option value="no-deadline">無截止日</option>
-          </select>
-        </div>
+        <fieldset class="status-group">
+          <legend class="field-label">顯示截止狀態</legend>
+          <label class="status-option">
+            <input type="checkbox" name="statusFilter" value="due-soon" checked />
+            <span>即將截止</span>
+          </label>
+          <label class="status-option">
+            <input type="checkbox" name="statusFilter" value="active" checked />
+            <span>截止未到</span>
+          </label>
+          <label class="status-option">
+            <input type="checkbox" name="statusFilter" value="expired" />
+            <span>已截止</span>
+          </label>
+          <label class="status-option">
+            <input type="checkbox" name="statusFilter" value="no-deadline" checked />
+            <span>無截止日</span>
+          </label>
+        </fieldset>
+
         <div class="field-group">
           <label class="field-label" for="sortSelect">排序方式</label>
           <select id="sortSelect">
@@ -63,7 +76,8 @@
             <option value="date-asc">最早公告在前</option>
           </select>
         </div>
-        <button id="clearFilters" type="button">重設篩選</button>
+
+        <button id="clearFilters" type="button">重設條件</button>
       </section>
 
       <section aria-live="polite">

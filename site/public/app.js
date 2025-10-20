@@ -7,13 +7,15 @@ const BADGE_TEXT = {
   'no-deadline': '無截止日',
 };
 
+const DEFAULT_STATUS_VALUES = ['due-soon', 'active', 'no-deadline'];
+
 const state = {
   documents: [],
   filtered: [],
   filters: {
     search: '',
-    status: 'all',
     sort: 'deadline-asc',
+    statuses: new Set(DEFAULT_STATUS_VALUES),
   },
 };
 
@@ -23,11 +25,46 @@ const elements = {
   status: document.getElementById('status'),
   documentList: document.getElementById('documentList'),
   searchInput: document.getElementById('search'),
-  statusFilter: document.getElementById('statusFilter'),
   sortSelect: document.getElementById('sortSelect'),
   clearFilters: document.getElementById('clearFilters'),
   updatedAt: document.getElementById('updatedAt'),
 };
+
+const statusCheckboxes = Array.from(
+  document.querySelectorAll('input[name="statusFilter"]'),
+);
+
+function syncStatusCheckboxes() {
+  statusCheckboxes.forEach((checkbox) => {
+    checkbox.checked = state.filters.statuses.has(checkbox.value);
+  });
+}
+
+function resetStatusFilters() {
+  state.filters.statuses = new Set(DEFAULT_STATUS_VALUES);
+  syncStatusCheckboxes();
+}
+
+statusCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener('change', () => {
+    const { value, checked } = checkbox;
+
+    if (checked) {
+      state.filters.statuses.add(value);
+    } else {
+      state.filters.statuses.delete(value);
+      if (state.filters.statuses.size === 0) {
+        state.filters.statuses.add(value);
+        checkbox.checked = true;
+        return;
+      }
+    }
+
+    render();
+  });
+});
+
+syncStatusCheckboxes();
 
 elements.searchInput.addEventListener('input', (event) => {
   state.filters.search = event.target.value.trim();
@@ -45,10 +82,6 @@ elements.searchInput.addEventListener('keydown', (event) => {
   }
 });
 
-elements.statusFilter.addEventListener('change', (event) => {
-  state.filters.status = event.target.value;
-  render();
-});
 
 elements.sortSelect.addEventListener('change', (event) => {
   state.filters.sort = event.target.value;
@@ -56,20 +89,21 @@ elements.sortSelect.addEventListener('change', (event) => {
 });
 
 elements.clearFilters.addEventListener('click', () => {
-  if (
-    !state.filters.search &&
-    state.filters.status === 'all' &&
-    state.filters.sort === 'deadline-asc'
-  ) {
+  const hasSearch = Boolean(state.filters.search);
+  const hasSort = state.filters.sort !== 'deadline-asc';
+  const hasStatusChange =
+    state.filters.statuses.size !== DEFAULT_STATUS_VALUES.length ||
+    DEFAULT_STATUS_VALUES.some((value) => !state.filters.statuses.has(value));
+
+  if (!hasSearch && !hasSort && !hasStatusChange) {
     return;
   }
 
   state.filters.search = '';
-  state.filters.status = 'all';
   state.filters.sort = 'deadline-asc';
+  resetStatusFilters();
 
   elements.searchInput.value = '';
-  elements.statusFilter.value = 'all';
   elements.sortSelect.value = 'deadline-asc';
 
   render();
@@ -81,6 +115,18 @@ function bootstrapLayout() {
   document.title = '高雄建築師公會公告快覽';
   const template = document.createElement('template');
   template.innerHTML = `
+    <div class="top-bar shell">
+      <div class="top-bar__search">
+        <label class="sr-only" for="search">搜尋主旨或附件</label>
+        <input
+          id="search"
+          type="search"
+          placeholder="搜尋主旨或附件"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
     <header class="hero">
       <div class="shell hero__inner">
         <div class="hero__lede">
@@ -105,25 +151,26 @@ function bootstrapLayout() {
 
     <main class="shell flow">
       <section class="controls" aria-label="篩選與排序">
-        <div class="search-group">
-          <label class="field-label" for="search">搜尋主旨或附件</label>
-          <input
-            id="search"
-            type="search"
-            placeholder="輸入關鍵字，例如「活動」或「申請」"
-            autocomplete="off"
-          />
-        </div>
-        <div class="field-group">
-          <label class="field-label" for="statusFilter">截止狀態</label>
-          <select id="statusFilter">
-            <option value="all">全部公告</option>
-            <option value="due-soon">即將截止 (7 日內)</option>
-            <option value="active">截止未到</option>
-            <option value="expired">已截止</option>
-            <option value="no-deadline">無截止日</option>
-          </select>
-        </div>
+        <fieldset class="status-group">
+          <legend class="field-label">顯示截止狀態</legend>
+          <label class="status-option">
+            <input type="checkbox" name="statusFilter" value="due-soon" checked />
+            <span>即將截止</span>
+          </label>
+          <label class="status-option">
+            <input type="checkbox" name="statusFilter" value="active" checked />
+            <span>截止未到</span>
+          </label>
+          <label class="status-option">
+            <input type="checkbox" name="statusFilter" value="expired" />
+            <span>已截止</span>
+          </label>
+          <label class="status-option">
+            <input type="checkbox" name="statusFilter" value="no-deadline" checked />
+            <span>無截止日</span>
+          </label>
+        </fieldset>
+
         <div class="field-group">
           <label class="field-label" for="sortSelect">排序方式</label>
           <select id="sortSelect">
@@ -133,7 +180,8 @@ function bootstrapLayout() {
             <option value="date-asc">最早公告在前</option>
           </select>
         </div>
-        <button id="clearFilters" type="button">重設篩選</button>
+
+        <button id="clearFilters" type="button">重設條件</button>
       </section>
 
       <section aria-live="polite">
@@ -159,7 +207,6 @@ function bootstrapLayout() {
 
     <script type="module" src="./app.js"></script>
   `;
-
   document.body.replaceChildren(template.content.cloneNode(true));
 }
 
@@ -309,7 +356,6 @@ function sortDocuments(documents) {
 
 function applyFilters() {
   const query = state.filters.search.toLowerCase();
-  const status = state.filters.status;
 
   let results = state.documents;
 
@@ -334,8 +380,10 @@ function applyFilters() {
     });
   }
 
-  if (status !== 'all') {
-    results = results.filter((doc) => doc.deadlineCategory === status);
+  if (state.filters.statuses.size) {
+    results = results.filter((doc) =>
+      state.filters.statuses.has(doc.deadlineCategory ?? 'no-deadline'),
+    );
   }
 
   return sortDocuments(results);
