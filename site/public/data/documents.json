@@ -1,6 +1,18 @@
 {
   "documents": [
     {
+      "date": "2026-09-10",
+      "subject": "隨函檢送本會116年度會員輪值服務工作報名表乙份(如附件)，請有意願且符合輪...",
+      "subjectUrl": "https://www.kaa.org.tw/public_list_1_show.php?b=5881",
+      "deadline": "2026-10-01",
+      "attachments": [
+        {
+          "label": "附檔",
+          "url": "https://www.kaa.org.tw/download.php?b=publicdoc/5881/7529accf1b29f61738f1665dc2b03f3b"
+        }
+      ]
+    },
+    {
       "date": "2026-09-08",
       "subject": "(報名成功名單) 115/9/8 「2026建築技術規則及綠建築錯誤樣態實務...",
       "subjectUrl": "https://www.kaa.org.tw/public_list_1_show.php?b=5878",
@@ -1152,19 +1164,7 @@
           "url": "https://www.kaa.org.tw/download.php?b=publicdoc/5550/32dd964bb3fc12cf793293e79fe21b46"
         }
       ]
-    },
-    {
-      "date": "2024-11-29",
-      "subject": "主旨：本會114年度會員證已製作完竣，即日起請向本會繳納常年會費並領取會員證...",
-      "subjectUrl": "https://www.kaa.org.tw/public_list_1_show.php?b=5549",
-      "deadline": "2025-03-17",
-      "attachments": [
-        {
-          "label": "附檔",
-          "url": "https://www.kaa.org.tw/download.php?b=publicdoc/5549/d8187a5bbbc473494bcd6b3c25df5aa0"
-        }
-      ]
     }
   ],
-  "updatedAt": "2026-09-10T02:20:24.938Z"
+  "updatedAt": "2026-09-10T07:41:33.357Z"
 }
